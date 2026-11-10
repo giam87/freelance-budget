@@ -1,0 +1,88 @@
+# Regole fiscali versionate per anno.
+# Ogni blocco vale per l'anno d'imposta indicato in `anno`.
+# Aggiornare qui quando cambiano aliquote/soglie, senza toccare codice.
+# Fonti consigliate: Agenzia delle Entrate, INPS Circolari annuali.
+
+regime_forfettario:
+  # Coefficienti di redditività per gruppo ATECO (D.L. 190/2014 All.4).
+  # Stabili dal 2015: li teniamo in un unico blocco, non per anno.
+  coefficienti_redditivita:
+    "62.10.00": 0.67   # Attività professionali, scientifiche e tecniche
+    # Estendere qui altri ATECO all'occorrenza.
+
+  # Soglie strutturali del regime.
+  soglie:
+    fatturato_max_annuo: 85000        # limite permanenza regime
+    acconto_minimo_frazionato: 257.52 # sotto → unico versamento novembre
+
+# Regole di versamento F24.
+# Sostanzialmente stabili negli anni: le tengo fuori dal blocco `anni`.
+# Se cambia qualcosa (es. una soglia), creare una sezione versionata.
+regole_versamento:
+  imposta_sostitutiva:
+    # Acconto totale per l'anno N = 100% dell'imposta dovuta per l'anno N-1.
+    pct_acconto_totale_su_anno_precedente: 1.00
+    split_acconto_1: 0.40   # 30 giugno
+    split_acconto_2: 0.60   # 30 novembre
+    # Sotto questa soglia non si fraziona: unico versamento a novembre.
+    soglia_frazionamento_euro: 257.52
+    giorno_acconto_1:  { mese: 6,  giorno: 30 }
+    giorno_acconto_2:  { mese: 11, giorno: 30 }
+    giorno_saldo:      { mese: 6,  giorno: 30 }
+
+  inps_gestione_separata:
+    # Per liberi professionisti iscritti GS l'acconto è 80% dei contributi
+    # dell'anno precedente, diviso 50/50 tra giugno e novembre.
+    # NOTA: regola stabile ma da verificare annualmente con circolare INPS.
+    pct_acconto_totale_su_anno_precedente: 0.80
+    split_acconto_1: 0.50
+    split_acconto_2: 0.50
+    soglia_frazionamento_euro: null   # non applicabile
+    giorno_acconto_1:  { mese: 6,  giorno: 30 }
+    giorno_acconto_2:  { mese: 11, giorno: 30 }
+    giorno_saldo:      { mese: 6,  giorno: 30 }
+
+# Parametri variabili per anno d'imposta.
+# Ogni entry è self-contained: motore seleziona in base all'anno.
+anni:
+  - anno: 2023
+    imposta_sostitutiva:
+      aliquota_ordinaria: 0.15
+      aliquota_agevolata_primi_5_anni: 0.05
+    inps_gestione_separata:
+      # Aliquote 2023 per liberi professionisti iscritti GS.
+      aliquota_senza_altra_copertura: 0.2623
+      aliquota_con_altra_copertura_o_pensionati: 0.24
+      massimale_contributivo: 113520   # oltre non si versa
+    fonte: "INPS Circolare n.12/2023; AdE"
+
+  - anno: 2024
+    imposta_sostitutiva:
+      aliquota_ordinaria: 0.15
+      aliquota_agevolata_primi_5_anni: 0.05
+    inps_gestione_separata:
+      aliquota_senza_altra_copertura: 0.2607
+      aliquota_con_altra_copertura_o_pensionati: 0.24
+      massimale_contributivo: 119650
+    fonte: "INPS Circolare n.12/2024"
+
+  - anno: 2025
+    imposta_sostitutiva:
+      aliquota_ordinaria: 0.15
+      aliquota_agevolata_primi_5_anni: 0.05
+    inps_gestione_separata:
+      aliquota_senza_altra_copertura: 0.2607
+      aliquota_con_altra_copertura_o_pensionati: 0.24
+      massimale_contributivo: 120607
+    fonte: "INPS Circolare n.28/2025 (VERIFICARE valori ufficiali)"
+
+  - anno: 2026
+    imposta_sostitutiva:
+      aliquota_ordinaria: 0.15
+      aliquota_agevolata_primi_5_anni: 0.05
+    inps_gestione_separata:
+      # DA VERIFICARE: placeholder basato su 2025, aggiornare con Circolare INPS 2026.
+      aliquota_senza_altra_copertura: 0.2607
+      aliquota_con_altra_copertura_o_pensionati: 0.24
+      massimale_contributivo: null
+    fonte: "PLACEHOLDER — aggiornare con Circolare INPS 2026 appena pubblicata"

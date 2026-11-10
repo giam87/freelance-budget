@@ -1,0 +1,22 @@
+# Profilo fiscale dell'utente. Unica fonte di verità per i parametri personali.
+# Tutti i calcoli del motore partono da qui.
+
+anagrafica:
+  anno_apertura_partita_iva: 2018
+  regime: forfettario
+
+attivita:
+  codice_ateco: "62.10.00"
+
+previdenza:
+  tipo: inps_gestione_separata
+  ha_altra_copertura_previdenziale: false   # no lavoro dipendente, no pensione
+  # => si applica aliquota piena GS (senza altra copertura)
+
+fatturazione:
+  applica_rivalsa_inps_4pct: true   # la rivalsa 4% è un'addizione in fattura
+                                    # che NON modifica l'imponibile fiscale (è
+                                    # comunque compenso imponibile se confluisce
+                                    # nell'incassato — in forfettario conta tutto
+                                    # l'incassato ricevuto).
+  applica_bollo_2eur_sopra_77_47: true

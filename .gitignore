@@ -1,0 +1,26 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+*.db
+*.sqlite
+.env
+.fic_token.json
+.vscode/
+.idea/
+
+# Dati personali e locali: mai nel repo
+invoices_dump.json
+*.tgz
+.claude/
+
+# Frontend
+web/node_modules/
+web/dist/
+web/tsconfig.tsbuildinfo
+# output tsc rimasti accanto ai sorgenti .ts/.tsx
+web/src/*.js
